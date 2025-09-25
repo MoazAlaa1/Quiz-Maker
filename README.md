@@ -1,4 +1,3 @@
-# Quiz-Maker
 # 🎯 Quiz Maker - JavaScript Quiz Application
 
 A complete web-based quiz application with separate admin and user interfaces. Create custom quizzes through an admin panel and take interactive quizzes with real-time scoring.
