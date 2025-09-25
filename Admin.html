@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Admin Panel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: #f5f7fb;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .admin-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .admin-header {
+            background: #4a00e0;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .admin-header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .admin-header p {
+            opacity: 0.9;
+        }
+        
+        .admin-content {
+            padding: 30px;
+        }
+        
+        .form-section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            color: #4a00e0;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+        
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus, textarea:focus {
+            border-color: #4a00e0;
+            outline: none;
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .option-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 15px;
+        }
+        
+        .option-input {
+            flex: 1;
+        }
+        
+        .correct-answer {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        
+        .add-option-btn {
+            background: #f0f0f0;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .add-option-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+        
+        .btn {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #4a00e0;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #3a00b0;
+        }
+        
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #555;
+        }
+        
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+        
+        .question-list {
+            margin-top: 40px;
+        }
+        
+        .question-item {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #4a00e0;
+        }
+        
+        .question-item h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .question-options {
+            list-style: none;
+        }
+        
+        .question-options li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .correct {
+            color: #2ecc71;
+            font-weight: 600;
+        }
+        .demo{
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+            text-decoration: none; 
+            background-color: #39ca76;
+        }
+        .demo:hover{
+            
+            background-color: red;
+        }
+        @media (max-width: 768px) {
+            .option-row {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+            
+            .correct-answer {
+                justify-content: flex-start;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>Quiz Admin Panel</h1>
+            <p>Create and manage quiz questions</p>
+            <div style="text-align: center; margin: 20px 0;">
+                <a class="btn btn-secondary demo"  href="Quiz.html">Live Demo</a>
+            </div>
+        </div>
+        
+       
+        <div class="admin-content">
+            <div class="form-section">
+                <h2 class="section-title">Add New Question</h2>
+                
+                <div class="form-group">
+                    <label for="question-text">Question Text</label>
+                    <textarea id="question-text" placeholder="Enter your question here..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Options</label>
+                    
+                    <div class="option-row">
+                        <div class="option-input">
+                            <input type="text" class="Opt" placeholder="Option 1">
+                        </div>
+                    </div>
+                    
+                    <div class="option-row">
+                        <div class="option-input">
+                            <input type="text" class="Opt" placeholder="Option 2">
+                        </div>
+                    </div>
+                    
+                    <div class="option-row">
+                        <div class="option-input">
+                            <input type="text" class="Opt" placeholder="Option 3">
+                        </div>
+                    </div>
+                    
+                    <div class="option-row">
+                        <div class="option-input">
+                            <input type="text" class="Opt" placeholder="Option 4">
+                        </div>
+                    </div>
+                    <div id="newOption"></div>
+                    <button class="add-option-btn" id="AddOption">Add Another Option</button>
+                </div>
+                <div class="form-group">
+                    <label for="correct-option">Correct Option</label>
+                    <select id="correct-option">
+                        <option value="" disabled selected>Select the correct option</option>
+                        <option value="1" >Option 1</option>
+                        <option value="2" >Option 2</option>
+                        <option value="3" >Option 3</option>
+                        <option value="4" >Option 4</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="explanation">Explanation (Optional)</label>
+                    <textarea id="explanation" placeholder="Add explanation for the correct answer..."></textarea>
+                </div>
+                
+                
+                
+                <div class="form-actions">
+                    <!-- <button class="btn btn-secondary">Cancel</button> -->
+                    <button class="btn btn-primary" id="Save">Save Question</button>
+                    <!-- <button class="btn btn-primary" id="test">LocalStorage</button> -->
+                </div>
+            </div>
+            
+            <div class="question-list">
+                <h2 class="section-title">Existing Questions</h2>
+                <div id="Existing-Questions"></div>
+                </div>
+            </div>
+            <button style="background-color: crimson;" class="btn btn-primary btn-sm" onclick="Quiz.ClearAll()">Clear All</button>
+        </div>
+    </div>
+    
+    <script src="Admin.js"></script>
+</body>
+</html>
