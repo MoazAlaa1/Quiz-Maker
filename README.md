@@ -41,5 +41,4 @@ A complete web-based quiz application with separate admin and user interfaces. C
 - **Styling**: Custom CSS with responsive design
 - **No Dependencies**: Pure JavaScript implementation
 
-## 📁 Project Structure
 
